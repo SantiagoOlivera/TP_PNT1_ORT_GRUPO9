@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Login</h1>
+
+<form id="login" method="POST" action="">
+
+  <div class="form-group">
+    <label>Email address</label>
+    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted"  >We'll never share your email with anyone else.</small>
+  </div>
+
+  <div class="form-group">
+    <label >Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password">
+  </div>
+
+  <button type="submit" onclick="login(event)" class="btn btn-primary">Login</button>
+
+</form>
+
+
+<script>
+
+    var form = document.querySelector("#login");
+    //console.log(form);
+
+    function login(e){
+
+        e.preventDefault();
+
+        console.log(form);
+
+        var email    = document.querySelector("#login [name=email]").value
+        var password = document.querySelector("#login [name=password]").value
+
+        console.log(email, password);
+        
+        var formData = new FormData();
+        formData.append("email", email);
+        formData.append("password", password);
+
+        var req = new XMLHttpRequest();
+        req.open("POST", window.location + "/Login" );
+        req.send(formData);
+
+    }
+
+</script>
