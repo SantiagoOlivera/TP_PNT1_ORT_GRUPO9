@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using TP_PNT1_ORT.Models;
 
 namespace TP_PNT1_ORT.Controllers
 {
@@ -12,16 +13,13 @@ namespace TP_PNT1_ORT.Controllers
 
         [HttpPost]
         public IActionResult Login(
-            string email,
-            string password
+           [FromBody] Login login
         ){
 
-            Console.WriteLine(email);
-            Console.WriteLine(password);
-
+            
             return null;
 
-
         }
+
     }
 }

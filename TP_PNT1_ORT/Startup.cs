@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace TP_PNT1_ORT
 {
     public class Startup
@@ -23,6 +24,7 @@ namespace TP_PNT1_ORT
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddControllersWithViews();
         }
 
@@ -45,6 +47,8 @@ namespace TP_PNT1_ORT
             app.UseRouting();
 
             app.UseAuthorization();
+
+
 
             app.UseEndpoints(endpoints =>
             {
