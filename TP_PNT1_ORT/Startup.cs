@@ -58,6 +58,9 @@ namespace TP_PNT1_ORT
                 endpoints.MapControllerRoute(
                     name: "login",
                     pattern: "{controller=Login}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "signup",
+                    pattern: "{controller=Singup}/{action=Index}");
             });
         }
     }
