@@ -28,7 +28,7 @@ namespace TP_PNT1_ORT
             services.AddMvc();
             services.AddControllersWithViews();
 
-            String dbPath= @"filename=.\DB\TP1_PNT1_ORT.db";
+            String dbPath= @"filename=./DB/TP1_PNT1_ORT.db";
             services.AddDbContext<UsuariosContext>(options => options.UseSqlite(dbPath));
             services.AddDbContext<GruposContext>(options => options.UseSqlite(dbPath));
 
