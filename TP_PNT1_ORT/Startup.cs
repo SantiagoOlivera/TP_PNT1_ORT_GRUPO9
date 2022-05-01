@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using TP_PNT1_ORT.Context;
 
 namespace TP_PNT1_ORT
 {
@@ -26,6 +27,11 @@ namespace TP_PNT1_ORT
         {
             services.AddMvc();
             services.AddControllersWithViews();
+
+            String dbPath= @"filename=.\DB\TP1_PNT1_ORT.db";
+            services.AddDbContext<UsuariosContext>(options => options.UseSqlite(dbPath));
+            services.AddDbContext<GruposContext>(options => options.UseSqlite(dbPath));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +67,12 @@ namespace TP_PNT1_ORT
                 endpoints.MapControllerRoute(
                     name: "signup",
                     pattern: "{controller=Singup}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "grupos",
+                    pattern: "{controller=Grupos}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "Usuarios",
+                    pattern: "{controller=Usuarios}/{action=Index}");
             });
         }
     }

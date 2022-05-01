@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<h1>Grupo</h1>
+<h4>Eliminar</h4>
+
+<form id="grupo" method="POST" action="">
+    
+  <div class="form-group">
+    
+      <label>Id Grupo</label>
+    <input type="text" class="form-control" name="idGrupo" value="@Model.idGrupo"  placeholder="idGrupo" readonly>
+
+  </div>
+
+  <div class="form-group">
+    <label>Nombre</label>
+    <input type="text" class="form-control" name="nombre" value="@Model.nombre"  placeholder="Nombre" readonly>
+  </div>
+
+  <div class="form-group">
+    <label >Descripción</label>
+    <input type="text" class="form-control" name="descripcion" value="@Model.descripcion" placeholder="Descripción" readonly>
+  </div>
+
+  <button type="submit" class="btn btn-danger"  onclick="Delete" >Eliminar</button>
+
+</form>
