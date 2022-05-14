@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,10 @@ namespace TP_PNT1_ORT
             String dbPath= @"filename=./DB/TP1_PNT1_ORT.db";
             services.AddDbContext<UsuariosContext>(options => options.UseSqlite(dbPath));
             services.AddDbContext<GruposContext>(options => options.UseSqlite(dbPath));
+            services.AddDbContext<UsuariosGruposContext>(options => options.UseSqlite(dbPath));
+
+            services.AddSession();
+
 
         }
 
@@ -54,21 +59,21 @@ namespace TP_PNT1_ORT
 
             app.UseAuthorization();
 
-
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
                 endpoints.MapControllerRoute(
-                    name: "login",
+                    name: "Login",
                     pattern: "{controller=Login}/{action=Index}");
                 endpoints.MapControllerRoute(
-                    name: "signup",
+                    name: "Signup",
                     pattern: "{controller=Singup}/{action=Index}");
                 endpoints.MapControllerRoute(
-                    name: "grupos",
+                    name: "Grupos",
                     pattern: "{controller=Grupos}/{action=Index}");
                 endpoints.MapControllerRoute(
                     name: "Usuarios",

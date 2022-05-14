@@ -4,26 +4,117 @@
 @{
 }
 
+
+
+
+
+
 <h1>Grupo</h1>
 <h4>Modificar</h4>
 
 <form id="grupo" method="POST" action="">
 
-  <div class="form-group">
-    <label>Id Grupo</label>
-    <input type="text" class="form-control" name="idGrupo" value="@Model.idGrupo"  placeholder="idGrupo" readonly>
-  </div>
+    <div class="form-group">
+        <label>Id Grupo</label>
+        <input type="text" class="form-control" name="idGrupo" value="@Model.idGrupo"  placeholder="idGrupo" readonly>
+    </div>
 
-  <div class="form-group">
-    <label>Nombre</label>
-    <input type="text" class="form-control" name="nombre" value="@Model.nombre"  placeholder="Nombre" required>
-  </div>
+    <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" class="form-control" name="nombre" value="@Model.nombre"  placeholder="Nombre" required>
+    </div>
 
-  <div class="form-group">
-    <label >Descripción</label>
-    <input type="text" class="form-control" name="descripcion" value="@Model.descripcion" placeholder="Descripción" required>
-  </div>
+    <div class="form-group">
+        <label >Descripción</label>
+        <input type="text" class="form-control" name="descripcion" value="@Model.descripcion" placeholder="Descripción" required>
+    </div>
 
-  <button type="submit" class="btn btn-primary"  onclick="Edit" >Modificar</button>
+    <h1>Jugadores</h1>
+
+    <table id="usuarios" class="table table-striped table-bordered" style="width:100%">
+            
+            @*@Html.ActionLink("Agregar", "Create", null, null, new { @class = "btn btn-success" } )*@
+
+            
+                
+            <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#jugadoresModal">Agregar</a>
+                
+            
+
+
+            <br />
+            <br />
+
+            
+            <thead>
+                
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Elimnar</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            
+                 @foreach(UsuarioGrupo ug in @Model.UsuariosGrupos){
+                    <tr>
+                        <td>@ug.usuario.nombre</td>
+                        <td>@ug.usuario.apellido</td>
+                        <td>@ug.usuario.email</td>
+                        <td>@Html.ActionLink("Eliminar", "Delete", null,null,   new { @class = "btn btn-danger" } )</td>
+                    </tr>
+                 }
+           
+            </tbody>
+
+
+    </table>
+
+
+    <button type="submit" class="btn btn-primary"  onclick="Edit" >Modificar</button>
 
 </form>
+
+
+
+
+
+
+<!-- large modal -->
+<div class="modal fade" id="jugadoresModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Seleccionar usuario</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+         
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script  type="text/javascript">
+    
+    $(document).ready(function() {
+        
+        $('#usuarios').DataTable({});
+
+    });
+
+
+</script>
+

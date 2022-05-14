@@ -4,24 +4,22 @@ using TP_PNT1_ORT.Models;
 
 namespace TP_PNT1_ORT.Context
 {
-    public class GruposContext : DbContext
+    public class UsuariosGruposContext : DbContext
     {
-        public GruposContext(DbContextOptions<GruposContext> options)
+        public UsuariosGruposContext(DbContextOptions<UsuariosGruposContext> options)
            : base(options)
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //configura clave multiple
+            modelBuilder.Entity<UsuarioGrupo>().HasKey(sc => new {  sc.email, sc.idGrupo });
 
             modelBuilder.Entity<UsuarioGrupo>()
-                .HasKey(sc => new { sc.email, sc.idGrupo });
-
-            modelBuilder.Entity<UsuarioGrupo>()
-               .HasOne<Usuario>(sc => sc.usuario)
-               .WithMany(s => s.UsuariosGrupos)
-               .HasForeignKey(sc => sc.email);
+                .HasOne<Usuario>(sc => sc.usuario)
+                .WithMany(s => s.UsuariosGrupos)
+                .HasForeignKey(sc => sc.email);
 
             modelBuilder.Entity<UsuarioGrupo>()
                 .HasOne<Grupo>(sc => sc.grupo)
@@ -30,9 +28,11 @@ namespace TP_PNT1_ORT.Context
 
         }
 
-        public DbSet<UsuarioGrupo> UsuariosGrupos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
+        public DbSet<UsuarioGrupo> UsuariosGrupos { get; set; }
+        
+        
 
     }
 }

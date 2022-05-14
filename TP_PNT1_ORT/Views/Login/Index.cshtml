@@ -1,29 +1,46 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+
 <h1>Login</h1>
+
+@if (!String.IsNullOrEmpty(@ViewBag.Message)) {
+
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>    
+
+}
+
+@{
+    var email = "";
+    if( Model != null  ){
+        email = Model.email;
+    }
+
+}
 
 <form id="login" method="POST" action="">
 
-  <div class="form-group">
-    <label>Email address</label>
-    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted"  >We'll never share your email with anyone else.</small>
-  </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email" value="@email">
+        <small id="emailHelp" class="form-text text-muted"  >We'll never share your email with anyone else.</small>
+      </div>
 
-  <div class="form-group">
-    <label >Password</label>
-    <input type="password" class="form-control" name="password" placeholder="Password">
-  </div>
+      <div class="form-group">
+        <label >Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Password">
+      </div>
 
-  <button type="submit" onclick="login(event)" class="btn btn-primary">Login</button>
+    <button type="submit" onclick="Login" class="btn btn-primary">Login</button>
 
 </form>
 
 
 <script>
+
+    /*
 
     var form = document.querySelector("#login");
     //console.log(form);
@@ -47,5 +64,7 @@
         
 
     }
+
+    */
 
 </script>

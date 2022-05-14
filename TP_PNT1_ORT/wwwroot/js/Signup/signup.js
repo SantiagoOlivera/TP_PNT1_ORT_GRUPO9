@@ -12,7 +12,6 @@ function getFormValue() {
     });
 
     
-
     return form;
 
 }

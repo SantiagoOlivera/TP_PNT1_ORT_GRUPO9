@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TP_PNT1_ORT.Models
 {
@@ -9,9 +11,9 @@ namespace TP_PNT1_ORT.Models
         public int idGrupo { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        //public Usuario admin { get; set; }
-        //public List<Usuario> jugadores { get; set; }
+        public ICollection<UsuarioGrupo> UsuariosGrupos { get; set; }
 
 
+       
     }
 }
