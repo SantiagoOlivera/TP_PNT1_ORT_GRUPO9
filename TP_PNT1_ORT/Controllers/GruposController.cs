@@ -103,10 +103,10 @@ namespace TP_PNT1_ORT.Controllers
 
                     Grupo grupo = _context.Grupos
                         .Include(g => g.UsuariosGrupos)
-                        .ThenInclude(g=> g.usuario)
+                        .ThenInclude(g => g.usuario)
                         .Where(g => g.idGrupo == id)
-                        .FirstOrDefault(); 
-                       
+                        .FirstOrDefault();
+
 
                     //Grupo grupo = _context.Grupos.Find(id);
                     //grupo.UsuariosGrupos = this._context.UsuariosGrupos
@@ -214,6 +214,7 @@ namespace TP_PNT1_ORT.Controllers
         }
 
         [HttpPost]
+
         public ActionResult AddJugador(Usuario jugador)
         {
 
@@ -222,6 +223,18 @@ namespace TP_PNT1_ORT.Controllers
                 .FirstOrDefault();
 
             return View();
+
+
+        }
+
+        [HttpPost("/Grupos/ListUsuarios")]
+        public List<Usuario> ListUsuarios()
+        {
+
+            List<Usuario> listaUsuarios = this._context.Usuarios.ToList();
+
+
+            return listaUsuarios;
 
 
         }
