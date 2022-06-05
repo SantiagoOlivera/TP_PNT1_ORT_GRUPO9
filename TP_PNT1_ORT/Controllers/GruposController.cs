@@ -7,12 +7,13 @@ using TP_PNT1_ORT.Context;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text.RegularExpressions;
 
 namespace TP_PNT1_ORT.Controllers
 {
     public class GruposController : Controller
     {
-
+        private Regex _regexEmail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private readonly GruposContext _context;
 
         public GruposController(
@@ -50,8 +51,35 @@ namespace TP_PNT1_ORT.Controllers
         // GET: GruposController/Details/5
         public ActionResult Details(int id)
         {
+
+            try
+            {
+                Grupo grupo = _context.Grupos
+                    .Include(g => g.UsuariosGrupos)
+                    .ThenInclude(g => g.usuario)
+                    .Where(g => g.idGrupo == id)
+                    .FirstOrDefault();
+
+
+                if (grupo != null)
+                {
+                    return View(grupo);
+                }
+
+                return NotFound();
+
+            }
+            catch (Exception ex) {
+
+                return View(ex);
+
+            }
+
+
             return View();
-        }
+
+
+        }   
 
         // GET: GruposController/Create
         public ActionResult Create()
@@ -107,15 +135,6 @@ namespace TP_PNT1_ORT.Controllers
                         .Where(g => g.idGrupo == id)
                         .FirstOrDefault();
 
-
-                    //Grupo grupo = _context.Grupos.Find(id);
-                    //grupo.UsuariosGrupos = this._context.UsuariosGrupos
-                    //    .Where(g => g.idGrupo == id)
-                    //    .Include(g => g.grupo)
-                    //    .Include(g => g.usuario)
-                    //    .ToList();
-
-
                     if (grupo != null) {
                         return View(grupo);
                     }
@@ -141,22 +160,19 @@ namespace TP_PNT1_ORT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            [Bind("idGrupo", "nombre", "descripcion")] Grupo grupo
+             Grupo grupo
         //IFormCollection collection
         )
         {
             try
+            
             {
 
                 if (ModelState.IsValid)
                 {
-
                     //Grupo grupo1 = this._context.Grupos.FirstOrDefault( x => x.idGrupo == id);
-
                     _context.Update(grupo);
                     await _context.SaveChangesAsync();
-
-
                 }
 
 
@@ -236,6 +252,115 @@ namespace TP_PNT1_ORT.Controllers
 
             return listaUsuarios;
 
+
+        }
+
+        [HttpPost("/Grupos/agregarUsuario")]
+        public ActionResult agregarUsuario(string email, int idGrupo) {
+
+            ActionResult rta = null;
+            Usuario usuario = null;
+
+            if (!string.IsNullOrEmpty(email) && this._regexEmail.IsMatch(email)) {
+
+                usuario = this._context.Usuarios.FirstOrDefault(u => u.email.Equals(email));
+
+
+                if (usuario == null)
+                {
+
+                    rta = StatusCode(500, "No existe usuario con el email ingresado!");
+
+                }
+                else {
+
+                    Grupo grupo = _context.Grupos
+                        .Include(g => g.UsuariosGrupos)
+                        .ThenInclude(g => g.usuario)
+                        .Where(g => g.idGrupo == idGrupo)
+                        .FirstOrDefault();
+
+                    //verificamos si ya existe el usuario en el grupo
+                    bool encontrado = false;
+                    int i = 0;
+                    while (i < grupo.UsuariosGrupos.Count && !encontrado) {
+
+                        if (grupo.UsuariosGrupos[i].email.Equals(email)) {
+                            encontrado = true;
+                        }
+
+                        i++;
+                    }
+
+                    if (encontrado) {
+                        rta = StatusCode(500, "El usuario ya existe en el grupo " + grupo.nombre + "!");
+                    }
+                    else {
+
+                        rta = Json(usuario);
+
+                    }
+
+
+                }
+
+            } else {
+
+                rta = StatusCode(500, "El email del usuario ingresado esta vacio o es invalido!");
+
+            }
+
+
+            return rta;
+
+        }
+
+        [HttpPost("/Grupos/recargarJugadoresTabla")]
+        public ActionResult recargarJugadoresTabla(
+            int idGrupo,
+            List<Usuario> usuarios
+        ){
+            try
+            {
+
+                if (idGrupo != null)
+                {
+
+                    Grupo grupo = _context.Grupos
+                        .Include(g => g.UsuariosGrupos)
+                        .ThenInclude(g => g.usuario)
+                        .Where(g => g.idGrupo == idGrupo)
+                        .FirstOrDefault();
+
+                    foreach (Usuario usuario in usuarios) {
+                        
+                        UsuarioGrupo usuarioGrupo = new UsuarioGrupo();
+                        usuarioGrupo.email = usuario.email;
+                        usuarioGrupo.idGrupo = idGrupo;
+
+                        grupo.UsuariosGrupos.Add(usuarioGrupo);
+
+                    }
+
+
+                    if (grupo != null) {
+
+                        return View(grupo);
+
+                    }
+
+                    return NotFound();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return View(ex);
+
+            }
+
+            return View();
 
         }
 

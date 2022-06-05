@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace TP_PNT1_ORT.Models
 {
     [Table("UsuariosGrupos")]
-    public class UsuarioGrupo{
+    public class UsuarioGrupo {
 
         [Key]
         public string email { get; set; }
@@ -16,5 +16,17 @@ namespace TP_PNT1_ORT.Models
         public int idGrupo { get; set; }
         public Grupo grupo { get; set; }
 
+
+        //public UsuarioGrupo(int idGrupo, string email)
+        //{
+        //    this.idGrupo = idGrupo;
+        //    this.email = email;
+        //}
+
+
     }
+
+
+   
+
 }
