@@ -32,7 +32,10 @@ namespace TP_PNT1_ORT
             String dbPath= @"filename=./DB/TP1_PNT1_ORT.db";
             services.AddDbContext<UsuariosContext>(options => options.UseSqlite(dbPath));
             services.AddDbContext<GruposContext>(options => options.UseSqlite(dbPath));
+            services.AddDbContext<PartidosContext>(options => options.UseSqlite(dbPath));
             services.AddDbContext<UsuariosGruposContext>(options => options.UseSqlite(dbPath));
+            services.AddDbContext<ApuestasContext>(options => options.UseSqlite(dbPath));
+
 
             services.AddSession();
 
@@ -76,8 +79,14 @@ namespace TP_PNT1_ORT
                     name: "Grupos",
                     pattern: "{controller=Grupos}/{action=Index}");
                 endpoints.MapControllerRoute(
+                    name: "Partidos",
+                    pattern: "{controller=Partidos}/{action=Index}");
+                endpoints.MapControllerRoute(
                     name: "Usuarios",
                     pattern: "{controller=Usuarios}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "Apuestas",
+                    pattern: "{controller=Apuestas}/{action=Index}");
             });
         }
     }

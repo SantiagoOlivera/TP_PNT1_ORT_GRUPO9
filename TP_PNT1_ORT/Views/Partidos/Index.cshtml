@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model IList<int>
+
+<h1>Partidos</h1>
+<h4>Mundial</h4>
+
+<br />
+<br />
+
+<table id="usuarios" class="table table-striped table-bordered" style="width:100%;">
+
+    <thead>
+        <tr>
+            <th>Año</th>
+            <th>Ver</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(int i = 0; i < Model.Count ; i++)
+        {
+            <tr>
+                <td>
+                    @Model[i]
+                </td>    
+                <td>
+                    @Html.ActionLink("Ver","Details", null, null, null, null, new { anio = @Model[i] } , new { @class = "btn btn-warning" } )
+                    @Html.ActionLink("Partidos","List", null, null, null, null, new { anio = @Model[i] } , new { @class = "btn btn-primary" } )
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>

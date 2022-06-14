@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TP_PNT1_ORT</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    
-
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
@@ -30,7 +29,7 @@
 
      
 
-           @* <header>
+            <header>
 
                 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                     <div class="container">
@@ -64,8 +63,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Grupos" asp-action="Index">Grupos</a>
                                 </li>
 
-                                <li class="nav-item">
+                                @*<li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="UsuariosGrupos" asp-action="Index">UsuariosGrupos</a>
+                                </li>*@
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Partidos" asp-action="Index">Partidos</a>
                                 </li>
 
                             </ul>
@@ -73,7 +76,7 @@
                     </div>
                 </nav>
 
-        </header>*@
+        </header>
 
     
     
@@ -99,8 +102,4 @@
 
 </body>
 
-
-<a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-            <a class="nav-link text-dark" asp-area="" asp-controller="Grupos" asp-action="Index">Grupos</a>
-            <a class="nav-link text-dark" asp-area="" asp-controller="UsuariosGrupos" asp-action="Index">UsuariosGrupos</a>
 </html>

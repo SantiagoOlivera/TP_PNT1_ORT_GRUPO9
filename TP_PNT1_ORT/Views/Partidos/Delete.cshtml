@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model TP_PNT1_ORT.Models.Partido
+
+<h1>Partidos</h1>
+<h4>Modificar</h4>
+
+<form id="partido" method="POST" action="">
+
+  <div class="form-group">
+    <label>ID Partido</label>
+    <input type="text" class="form-control" name="idPartido" value="@Model.idPartido"  placeholder="ID Partido" required readonly>
+  </div>
+
+  <div class="form-group">
+    <label>Año mundial</label>
+    <input type="text" class="form-control" name="mundial" value="@Model.mundial"  placeholder="Mundial" readonly>
+  </div>
+
+  <div class="form-group">
+
+    <label>Grupo</label>
+    <br/>
+    <select class="form-control" name="grupo" value="@Model.grupo" readonly>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="G">G</option>
+        <option value="H">H</option>
+    </select>
+
+  </div>
+
+  <div class="form-group">
+    <label>Equipo 1</label>
+    <input type="text" class="form-control" name="equipo1" value="@Model.equipo1"  placeholder="Equipo 1" readonly>
+  </div>
+
+  <div class="form-group">
+    <label>Equipo 2</label>
+    <input type="text" class="form-control" name="equipo2" value="@Model.equipo2" placeholder="Equipo 2" readonly>
+  </div>
+    
+  <div class="form-group">
+    <label>Fecha</label>
+    <input type="text" class="form-control" name="fecha" value="@Model.fecha" placeholder="Fecha partido" readonly>
+  </div>
+
+  
+  <div class="form-group">
+    <label>Número fecha</label>
+    <input type="number" min="1" max="3" maxlength="1" value="@Model.numeroDeFecha" class="form-control" name="numeroDeFecha"  placeholder="Número fecha" readonly>
+  </div>
+
+
+  <button type="submit" class="btn btn-danger"  onclick="Delete" >Eliminar</button>
+
+</form>

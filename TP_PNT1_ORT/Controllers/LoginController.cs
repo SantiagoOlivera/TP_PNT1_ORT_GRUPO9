@@ -30,7 +30,7 @@ namespace TP_PNT1_ORT.Controllers
            [FromForm] Login login
         ){
 
-            Usuario usuario = this._context.usuarios.FirstOrDefault(
+            Usuario usuario = this._context.Usuarios.FirstOrDefault(
                 x => x.email.Equals(login.email) 
                 && 
                 x.password.Equals(login.password)

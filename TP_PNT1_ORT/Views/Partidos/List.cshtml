@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IList<Partido>
+
+<h1>Partidos</h1>
+<h4>Lista</h4>
+
+
+@Html.ActionLink("Agregar","Create", null, null, null, null,  new { anio = @ViewBag.anio } , new { @class = "btn btn-success" } )
+
+<br />
+<br />
+
+<table id="partidos" class="table table-striped table-bordered" style="width:100%;">
+
+    <thead>
+        <tr>
+            <th>ID Partido</th>
+            <th>Mundial</th>
+            <th>Grupo</th>
+            <th>Fecha partido</th>
+            <th>Número de fecha</th>
+            <th>Equipo 1</th>
+            <th>Equipo 2</th>
+            <th>Resultado</th>
+            <th>Operaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Partido p in @Model){
+            <tr>
+                <td>@p.idPartido</td>
+                <td>@p.mundial</td>
+                <th>@p.grupo</th>
+                <td>@p.fecha</td>
+                <td>@p.numeroDeFecha</td>
+                <td>@p.equipo1</td>
+                <td>@p.equipo2</td>
+                <td>@p.golesEquipo1 - @p.golesEquipo2</td>
+                <td>
+                    @Html.ActionLink("Modificar","Edit", null, null, null, null,  new { idPartido = p.idPartido } , new { @class = "btn btn-primary" } )
+                    @Html.ActionLink("Eliminar","Delete", null, null, null, null, new { idPartido = p.idPartido } , new { @class = "btn btn-danger" } )
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>

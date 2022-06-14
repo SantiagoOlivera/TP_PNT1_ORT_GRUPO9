@@ -45,7 +45,7 @@
                     @Html.DisplayFor(x=> x.UsuariosGrupos[i].email)
                 </td>
                 <td>
-                    @Html.ActionLink("Ver apuesta","", null, null, null, null,  @Model, new { @class = "btn btn-warning" } )
+                    @Html.ActionLink("Ver apuesta","Details", "Apuestas", null, null, null, new { idGrupo = @Model.idGrupo , email = @Model.UsuariosGrupos[i].email  } , new { @class = "btn btn-warning" } )
                 </td>
             </tr>
         }

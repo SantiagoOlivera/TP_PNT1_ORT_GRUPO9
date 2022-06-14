@@ -37,7 +37,7 @@ namespace TP_PNT1_ORT.Controllers
             if ( !String.IsNullOrEmpty(email)  ) {
 
 
-                Usuario usuario = this._context.usuarios.FirstOrDefault(
+                Usuario usuario = this._context.Usuarios.FirstOrDefault(
                     x => x.email.Equals(email)
                 );
 

@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    UsuarioGrupo ug = ViewBag.usuarioGrupo;
+}
+
+@model List<Apuesta>
+
+
+
+<h1>Apuestas</h1>
+<h4>Ver</h4>
+
+<h6>Usuario: @ug.email - @ug.usuario.nombre @ug.usuario.apellido</h6>
+<h6>Grupo: @ug.idGrupo - @ug.grupo.descripcion</h6>
+
+
+<table id="apuestas" class="table table-striped table-bordered" style="width:100%;">
+    <thead>
+        <tr>
+            <th>ID Partido</th>
+            <th>Grupo</th>
+            <th>Equipo 1</th>
+            <th>Equipo 2</th>
+            <th>Resultado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Apuesta a in @Model)
+        {
+            <tr>
+                <td>@a.idPartido</td>
+                <td>@a.partido.grupo</td>
+                <td>@a.partido.equipo1</td>
+                <td>@a.partido.equipo2</td>
+                <td>@a.golesEquipo1 - @a.golesEquipo2</td>
+            </tr>
+        }
+    </tbody>
+</table>

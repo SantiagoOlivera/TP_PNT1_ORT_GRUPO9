@@ -155,6 +155,7 @@ namespace TP_PNT1_ORT.Controllers
 
         }
 
+   
         // POST: GruposController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -170,8 +171,29 @@ namespace TP_PNT1_ORT.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    //Grupo grupo1 = this._context.Grupos.FirstOrDefault( x => x.idGrupo == id);
-                    _context.Update(grupo);
+                    Grupo oldGrupo = _context.Grupos
+                           .Include(g => g.UsuariosGrupos)
+                           .ThenInclude(g => g.usuario)
+                           .Where(g => g.idGrupo == id)
+                           .FirstOrDefault();
+
+                    foreach (UsuarioGrupo ug in grupo.UsuariosGrupos)
+                    {
+
+                        UsuarioGrupo existe = oldGrupo.UsuariosGrupos.FirstOrDefault(x => x.idGrupo == ug.idGrupo && x.email == ug.email);
+
+                        if (existe == null)
+                        {
+                            UsuarioGrupo nuevoUsuarioGrupo = new UsuarioGrupo();
+                            nuevoUsuarioGrupo.idGrupo = ug.idGrupo;
+                            nuevoUsuarioGrupo.email = ug.email;
+                            oldGrupo.UsuariosGrupos.Add(nuevoUsuarioGrupo);
+                        }
+
+                    }
+
+
+                    _context.Update(oldGrupo);
                     await _context.SaveChangesAsync();
                 }
 
@@ -190,7 +212,11 @@ namespace TP_PNT1_ORT.Controllers
             if (id != null)
             {
 
-                Grupo grupo = _context.Grupos.Find(id);
+                Grupo grupo = _context.Grupos
+                    .Include(g => g.UsuariosGrupos)
+                    .ThenInclude(g => g.usuario)
+                    .Where(g => g.idGrupo == id)
+                    .FirstOrDefault();
 
                 if (grupo == null)
                 {
