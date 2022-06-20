@@ -30,6 +30,11 @@
     <input type="text" class="form-control" name="descripcion" value="@Model.descripcion" placeholder="Descripción" readonly>
   </div>
 
+  <div class="form-group">
+       <label >Mundial</label>
+        @Html.DropDownListFor(x=> x.mundial , (IEnumerable<SelectListItem>)ViewBag.mundiales, "Seleccionar mundial", new { disabled= "disabled", @class="form-control" } )
+   </div>
+
   <table id="usuarios" class="table table-striped table-bordered" style="width:100%;"> 
     <thead>
         <tr>

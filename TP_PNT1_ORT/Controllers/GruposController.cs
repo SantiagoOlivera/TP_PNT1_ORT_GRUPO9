@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TP_PNT1_ORT.Controllers
 {
@@ -15,21 +16,51 @@ namespace TP_PNT1_ORT.Controllers
     {
         private Regex _regexEmail = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private readonly GruposContext _context;
+        private readonly List<SelectListItem> _selectListMundiales;
 
         public GruposController(
             GruposContext context
         )
         {
             _context = context;
+            _selectListMundiales = this.getMundialesSelectListItem();
+
+        }
+
+        private List<SelectListItem> getMundialesSelectListItem() {
+
+            try
+            {
+                List<Mundial> mundiales = this._context.Mundiales.OrderByDescending(x=>x.anio).ToList();
+                List<SelectListItem> selectListMundiales = new List<SelectListItem>();
+
+                foreach (Mundial m in mundiales)
+                {
+                    selectListMundiales.Add(new SelectListItem() { Text = (m.anio.ToString() + " - " + m.descripcion), Value = m.anio.ToString() });
+                }
+
+
+                return selectListMundiales;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
         }
 
         // GET: GruposController
         public ActionResult Index()
         {
 
+            
             ViewBag.grupos = this.List();
 
             return View();
+
+
         }
 
         private IEnumerable<Grupo> List()
@@ -41,11 +72,20 @@ namespace TP_PNT1_ORT.Controllers
 
             //this._context.UsuariosGrupos.ToList();
             //this._context.Usuarios.ToList();
-            List<Grupo> listGrupos = this._context.Grupos.ToList();
 
+            try
+            {
 
+                List<Grupo> listGrupos = this._context.Grupos.ToList();
 
-            return listGrupos;
+                return listGrupos;
+            }
+            catch (Exception ex) {
+
+                throw ex;
+
+            }
+            
         }
 
         // GET: GruposController/Details/5
@@ -63,6 +103,9 @@ namespace TP_PNT1_ORT.Controllers
 
                 if (grupo != null)
                 {
+
+                    ViewBag.mundiales = _selectListMundiales;
+
                     return View(grupo);
                 }
 
@@ -84,6 +127,9 @@ namespace TP_PNT1_ORT.Controllers
         // GET: GruposController/Create
         public ActionResult Create()
         {
+
+            ViewBag.mundiales = _selectListMundiales;
+
             return View();
         }
 
@@ -91,7 +137,7 @@ namespace TP_PNT1_ORT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("nombre", "descripcion")] Grupo grupo
+            Grupo grupo
             //IFormCollection collection
             )
         {
@@ -136,7 +182,10 @@ namespace TP_PNT1_ORT.Controllers
                         .FirstOrDefault();
 
                     if (grupo != null) {
+
+                        ViewBag.mundiales = _selectListMundiales;
                         return View(grupo);
+
                     }
 
                     return NotFound();
@@ -161,7 +210,7 @@ namespace TP_PNT1_ORT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-             Grupo grupo
+            Grupo grupo
         //IFormCollection collection
         )
         {
@@ -176,6 +225,11 @@ namespace TP_PNT1_ORT.Controllers
                            .ThenInclude(g => g.usuario)
                            .Where(g => g.idGrupo == id)
                            .FirstOrDefault();
+
+                    oldGrupo.nombre = grupo.nombre;
+                    oldGrupo.descripcion = grupo.descripcion;
+                    oldGrupo.mundial = grupo.mundial;
+
 
                     foreach (UsuarioGrupo ug in grupo.UsuariosGrupos)
                     {
@@ -224,6 +278,8 @@ namespace TP_PNT1_ORT.Controllers
                 }
 
 
+                ViewBag.mundiales = _selectListMundiales;
+
                 return View(grupo);
             }
 
@@ -235,7 +291,7 @@ namespace TP_PNT1_ORT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(
             int id,
-           [Bind("idGrupo", "nombre", "descripcion")] Grupo grupo
+           Grupo grupo
         //IFormCollection collection
         )
         {

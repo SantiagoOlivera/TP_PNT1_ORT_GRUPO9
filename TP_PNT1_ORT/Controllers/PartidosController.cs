@@ -1,20 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TP_PNT1_ORT.Context;
 
 namespace TP_PNT1_ORT.Models
 {
+    
     public class PartidosController : Controller
     {
         private readonly PartidosContext _context;
-
+        
 
         public PartidosController(
            PartidosContext context
-       )
-        {
+        ){
+
             _context = context;
+
         }
 
         public IActionResult Index()
@@ -22,15 +25,26 @@ namespace TP_PNT1_ORT.Models
 
 
 
-            List<int> lista = this._context.partidos
-                .GroupBy(g => g.mundial)
-                //.Select(g => new { mundial = g.Key , value = 2010 })
-                .Select(g => g.Key)
-                .ToList();
-            //.Select(s => new Partido{ s.Key.mundial = s.mundial })
+            //List<int> lista = this._context.partidos
+            //    .GroupBy(g => g.mundial)
+            //    //.Select(g => new { mundial = g.Key , value = 2010 })
+            //    .Select(g => g.Key)
+            //    .ToList();
 
+            try
+            {
 
-            return View(lista);
+                List<Mundial> mundiales = this._context.mundiales
+                    .OrderByDescending(x=>x.anio)
+                    .ToList();
+
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
+                return View(mundiales);
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
 
         }
 
@@ -55,14 +69,30 @@ namespace TP_PNT1_ORT.Models
         public IActionResult Details(
             int anio
         ){
+            try { 
 
-            List<Partido> lista = this._context.partidos
-                .Where(g => g.mundial == anio)
-                .OrderBy(o => o.grupo)
-                .ThenBy(o => o.numeroDeFecha)
-                .ToList();
+                List<Partido> lista = this._context.partidos
+                    .Where(g => g.mundial == anio)
+                    .OrderBy(o => o.grupo)
+                    .ThenBy(o => o.numeroDeFecha)
+                    .ToList();
 
-            return View(lista);
+                if (lista.Count == 0) {
+
+                    TempData["ErrorMessage"] = "Sin datos para mundial " + anio;
+
+                    return RedirectToAction(nameof(Index));
+
+                }
+
+                return View(lista);
+
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+
+            
 
         }
 

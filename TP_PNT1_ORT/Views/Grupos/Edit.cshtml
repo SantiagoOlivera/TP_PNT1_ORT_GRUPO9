@@ -30,6 +30,10 @@
         <input type="text" class="form-control" name="descripcion" value="@Model.descripcion" placeholder="Descripción" >
     </div>
 
+    <div class="form-group">
+       <label >Mundial</label>
+        @Html.DropDownListFor(x => x.mundial , (IEnumerable<SelectListItem>)ViewBag.mundiales, "Seleccionar mundial", new { @class="form-control" } )
+   </div>
 
     <button type="button" class="btn btn-success"  onclick="openModal()">Agregar jugador</button> 
     <br />

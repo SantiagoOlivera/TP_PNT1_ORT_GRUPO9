@@ -3,3 +3,43 @@
 *@
 @{
 }
+
+@model List<Grupo>
+
+@if(ViewBag.ErrorMessage != null){
+
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+else
+{
+    <h1>Grupos</h1>
+    <h4>Usuario: @ViewData["usuario"]</h4>
+    <br />
+
+    <table id="apuestas" class="table table-striped table-bordered" style="width:100%;">
+        <thead>
+            <tr>
+                <th>ID Grupo</th>
+                <th>Nombre</th>
+                <th>Apuesta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Grupo g in @Model){
+                <tr>
+                    <td>@g.idGrupo</td>
+                    <td>@g.nombre</td>
+                    <td>
+                       @Html.ActionLink("Ver apuesta","Details", null, null, null, null, new { idGrupo = @g.idGrupo, email = @ViewData["usuario"] } , new { @class = "btn btn-warning" } )
+                       
+                       @Html.ActionLink("Hacer apuesta", "Edit", "Apuestas", null, null, null, new { idGrupo = @g.idGrupo, usuario = @ViewData["usuario"], mundial = @g.mundial  } , new { @class = "btn btn-primary" } )
+                    </td>
+                </tr>
+            }
+        </tbody>
+    
+    </table>
+
+}

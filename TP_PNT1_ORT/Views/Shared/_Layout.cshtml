@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using TP_PNT1_ORT.Controllers;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,62 +27,78 @@
    
 </head>
 <body>
+    
+   @* @if (HttpContext.Session.GetString("usuario") != null)
+    {
+        <p>Hola</p>
+    }*@
+    
+    <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TP_PNT1_ORT</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
 
-     
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                            </li>
 
-            <header>
-
-                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                    <div class="container">
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TP_PNT1_ORT</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Signup" asp-action="Index">Sign up</a>
-                                </li>
-
-                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
-                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Signup" asp-action="Index">Sign up</a>
+                            </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Grupos" asp-action="Index">Grupos</a>
-                                </li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                            </li>
 
-                                @*<li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="UsuariosGrupos" asp-action="Index">UsuariosGrupos</a>
-                                </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Grupos" asp-action="Index">Grupos</a>
+                            </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Partidos" asp-action="Index">Partidos</a>
-                                </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UsuariosGrupos" asp-action="Index">UsuariosGrupos</a>
+                            </li>*@
 
-                            </ul>
-                        </div>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Partidos" asp-action="Index">Partidos</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Apuestas" asp-action="Index">Apuestas</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Mundiales" asp-action="Index">Mundiales</a>
+                            </li>
+
+                        </ul>
                     </div>
-                </nav>
-
-        </header>
+                </div>
+            </nav>
+            
+    </header>
 
     
-    
 
+    
     <div class="container">
+
+        @if (ViewData["usuario"] != null)
+        {
+            <div>Usuario: @ViewData["usuario"]</div>        
+        }
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

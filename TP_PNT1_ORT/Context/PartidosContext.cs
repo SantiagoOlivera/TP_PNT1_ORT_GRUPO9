@@ -15,5 +15,7 @@ namespace TP_PNT1_ORT.Context
         
         public DbSet<Partido> partidos { get; set; }
 
+        public DbSet<Mundial> mundiales { get; set; }
+
     }
 }

@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    
+}
+
+@model Podio
+
+<h1>Podio</h1>
+<h4>Ver</h1>
+<h6>Grupo: @Model.grupo.idGrupo - @Model.grupo.nombre</h6>
+<h6>Descripción: @Model.grupo.descripcion</h6>
+
+
+<table class="table table-striped table-bordered" style="width:100%;">
+    <thead>
+        <tr>
+            <th>Poscion</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Puntos</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    @for(int i = 0; i < @Model.posiciones.Count; i++){
+        int cont = i + 1;
+        <tr>
+            <td>@cont</td>
+            <td>@Model.posiciones[i].usuario.nombre</td>
+            <td>@Model.posiciones[i].usuario.apellido</td>
+            <td>@Model.posiciones[i].usuario.email</td>
+            <td>@Model.posiciones[i].puntos</td>
+        </tr>
+    }
+    </tbody>
+</table>

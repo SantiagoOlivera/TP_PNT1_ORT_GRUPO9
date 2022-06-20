@@ -5,6 +5,10 @@ using TP_PNT1_ORT.Context;
 using TP_PNT1_ORT.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Threading.Tasks;
 
 namespace TP_PNT1_ORT.Controllers
 {
@@ -26,7 +30,7 @@ namespace TP_PNT1_ORT.Controllers
 
         [HttpPost("Login")]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(
+        public async Task<IActionResult> Login(
            [FromForm] Login login
         ){
 
@@ -39,12 +43,34 @@ namespace TP_PNT1_ORT.Controllers
             
             if (usuario != null) {
 
-                HttpContext.Session.SetString("email", usuario.email);
-                
-                
-                
-                return RedirectToAction("Index", "Home", new { message = "Bienvenido " + usuario.nombre + " " + usuario.apellido + "!" });
+                HttpContext.Session.SetString("usuario", usuario.email);
 
+                //ViewBag.usuario = usuario.email;
+
+                ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                // El lo que luego obtendré al acceder a User.Identity.Name
+                identity.AddClaim(new Claim(ClaimTypes.Name, usuario.nombre));
+
+                // Se utilizará para la autorización por roles
+                identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
+
+                // Lo utilizaremos para acceder al Id del usuario que se encuentra en el sistema.
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, usuario.email));
+
+                // Lo utilizaremos cuando querramos mostrar el nombre del usuario logueado en el sistema.
+                identity.AddClaim(new Claim(ClaimTypes.GivenName, usuario.nombre));
+
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                
+                // En este paso se hace el login del usuario al sistema
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal);
+
+                //return RedirectToAction("Index", "Home", new { message = "Bienvenido " + usuario.nombre + " " + usuario.apellido + "!" });
+
+                return View("/Views/Home/Index.cshtml");
 
             }
 

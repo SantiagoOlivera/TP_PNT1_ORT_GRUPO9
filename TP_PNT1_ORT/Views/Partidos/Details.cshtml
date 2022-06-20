@@ -8,6 +8,7 @@
 @model IList<Partido>
 
 <h1>Partidos</h1>
+<h4>Ver</h4>
 
 @{
     int i = 0;
@@ -57,10 +58,10 @@
                                 <label style="text-align:center;">@Model[i].equipo1</label>
                             </div>
                             <div class="col-3 align-content-center">
-                                <input type="text" value="@Model[i].golesEquipo1" maxlength="2" style="max-width:35px;text-align:center;" readonly/>
+                                <input class="form-control" type="text" value="@Model[i].golesEquipo1" maxlength="2" style="max-width:35px;text-align:center;" readonly/>
                             </div>
                             <div class="col-3 align-content-center">
-                                <input type="text" value="@Model[i].golesEquipo2" maxlength="2" style="max-width:35px;text-align:center;" readonly/>
+                                <input class="form-control" type="text" value="@Model[i].golesEquipo2" maxlength="2" style="max-width:35px;text-align:center;" readonly/>
                             </div>
                             <div class="col-3 align-content-center">
                                 <label style="text-align:center;">@Model[i].equipo2</label>

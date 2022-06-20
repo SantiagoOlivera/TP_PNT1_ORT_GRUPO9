@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,10 +36,14 @@ namespace TP_PNT1_ORT
             services.AddDbContext<PartidosContext>(options => options.UseSqlite(dbPath));
             services.AddDbContext<UsuariosGruposContext>(options => options.UseSqlite(dbPath));
             services.AddDbContext<ApuestasContext>(options => options.UseSqlite(dbPath));
+            services.AddDbContext<MundialesContext>(options => options.UseSqlite(dbPath));
 
 
             services.AddSession();
 
+            //configuracion de identity para cookies de autenticacion
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(ConfigurarcionCookie);
 
         }
 
@@ -87,7 +92,22 @@ namespace TP_PNT1_ORT
                 endpoints.MapControllerRoute(
                     name: "Apuestas",
                     pattern: "{controller=Apuestas}/{action=Index}");
+
             });
+
+            //identity
+            app.UseCookiePolicy();
+
+
         }
+
+        public static void ConfigurarcionCookie(CookieAuthenticationOptions opciones)
+        {
+            opciones.LoginPath = "/Login";
+            opciones.AccessDeniedPath = "/Usuarios/NoAutorizado";
+            opciones.LogoutPath = "/Login/Logout";
+            opciones.ExpireTimeSpan = System.TimeSpan.FromMinutes(10);
+        }
+
     }
 }

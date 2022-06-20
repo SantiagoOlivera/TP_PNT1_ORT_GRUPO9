@@ -11,6 +11,7 @@ namespace TP_PNT1_ORT.Models
         public int idGrupo { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
+        public int? mundial { get; set; }
         public IList<UsuarioGrupo> UsuariosGrupos { get; set; } = new List<UsuarioGrupo>();
 
     }

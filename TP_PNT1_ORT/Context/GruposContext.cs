@@ -34,5 +34,7 @@ namespace TP_PNT1_ORT.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
 
+        public DbSet<Mundial> Mundiales { get; set; }
+
     }
 }
