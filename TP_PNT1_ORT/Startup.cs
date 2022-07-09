@@ -65,6 +65,8 @@ namespace TP_PNT1_ORT
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseSession();

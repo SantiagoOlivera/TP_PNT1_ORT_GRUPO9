@@ -68,9 +68,9 @@ namespace TP_PNT1_ORT.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     principal);
 
-                //return RedirectToAction("Index", "Home", new { message = "Bienvenido " + usuario.nombre + " " + usuario.apellido + "!" });
+                return RedirectToAction("Index", "Home", new { message = "Bienvenido " + usuario.nombre + " " + usuario.apellido + "!" });
 
-                return View("/Views/Home/Index.cshtml");
+                //return View("/Views/Home/Index.cshtml");
 
             }
 

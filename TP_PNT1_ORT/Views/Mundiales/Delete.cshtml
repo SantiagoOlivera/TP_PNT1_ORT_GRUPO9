@@ -7,6 +7,13 @@
 <h1>Mundial</h1>
 <h4>Eliminar</h4>
 
+@if(ViewBag.ErrorMessage != null){
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+
 <form id="mundial" method="POST" action="">
 
   <div class="form-group">

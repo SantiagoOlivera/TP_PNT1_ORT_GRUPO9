@@ -31,6 +31,7 @@ namespace TP_PNT1_ORT.Controllers
 
                 //_usuariosContext.Usuarios.Where(x => x.email.Equals(""));
 
+
                 if (this.usuario != null)
                 {
                     ViewData["usuario"] = this.usuario;
@@ -80,13 +81,22 @@ namespace TP_PNT1_ORT.Controllers
             ViewBag.usuarioGrupo = usuarioGrupo;
 
             List<Apuesta> apuestas = this._context.apuestas
+                .Include(p => p.partido)
                 .Where(x =>
                     x.idGrupo == idGrupo &&
                     x.email.Equals(email)
                 ).ToList();
 
             foreach (Apuesta apuesta in apuestas) { 
-                apuesta.partido = this._context.partidos.FirstOrDefault(x => x.idPartido == apuesta.idPartido);
+                
+                Partido auxPartido = this._context.partidos.FirstOrDefault(x => x.idPartido == apuesta.idPartido);
+
+                if (auxPartido != null) {
+
+                    apuesta.partido = auxPartido;
+
+                }
+
             }
 
             return View(apuestas);

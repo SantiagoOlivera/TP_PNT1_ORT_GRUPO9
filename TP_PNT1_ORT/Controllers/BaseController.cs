@@ -20,6 +20,7 @@ namespace TP_PNT1_ORT.Controllers
         }
         public string usuario
         {
+
             get
             {
                 //string emailUsuario = null;
@@ -33,8 +34,10 @@ namespace TP_PNT1_ORT.Controllers
                 //    emailUsuario = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
                 //}
-                string emailUsuario = HttpContext.Session.GetString("usuario");
+                //string emailUsuario = HttpContext.Session.GetString("usuario");
 
+                string emailUsuario = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //return int.Parse(idUsuario);
 
                 return emailUsuario;
 

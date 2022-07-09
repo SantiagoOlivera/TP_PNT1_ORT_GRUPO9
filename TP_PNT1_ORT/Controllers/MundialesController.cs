@@ -167,10 +167,25 @@ namespace TP_PNT1_ORT.Controllers
         {
             try
             {
+                List<Partido> partidos = this._context.Partidos
+                    .Where(x => x.mundial == mundial.anio)
+                    .ToList();
 
-                this._context.Mundiales.Remove(mundial);
-                this._context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                if (partidos.Count > 0)
+                {
+
+                    ViewBag.ErrorMessage = "No se puede eliminar el mundial porque ya tiene partidos asociados!";
+
+                    return Delete(mundial.anio);
+
+                }
+                else {
+
+                    this._context.Mundiales.Remove(mundial);
+                    this._context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+
+                }
 
             }
             catch (Exception ex)
